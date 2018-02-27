@@ -53,115 +53,15 @@
   
   
   <div class="form-group">
-    <label for="q0">Do you like cats?</label>
-    <select class="form-control" id="q0">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
+    <label for="tier">Pick a Tier</label>
+    <select class="form-control" id="tier">
+      <option value="1">Tier 1</option>
+      <option value="2">Tier 2</option>
+      <option value="3">Tier 3</option>
     </select>
   </div>
 
-   <div class="form-group">
-    <label for="q1">Do you like dogs?</label>
-    <select class="form-control" id="q1">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q2">Do you like sports?</label>
-    <select class="form-control" id="q2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q3">Do you like food?</label>
-    <select class="form-control" id="q3">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q4">Do you like money?</label>
-    <select class="form-control" id="q4">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q5">Do you like to dance?</label>
-    <select class="form-control" id="q5">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q6">Are you a fan of Game of Thrones?</label>
-    <select class="form-control" id="q6">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-   <div class="form-group">
-    <label for="q7">Do you enjoy video games or movies?</label>
-    <select class="form-control" id="q7">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="q8">Are you an apple person?</label>
-    <select class="form-control" id="q8">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="q9">Are you an android person?</label>
-    <select class="form-control" id="q9">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
-  
+   
   
 </form>
 
@@ -171,32 +71,16 @@
           <button type="submit" class="btn btn-primary submit">Submit</button>
         </form>
 
+    <div id="displayResult">Display Results</div>
+
+
       </div>
     </div>
   </div>
 
 <br>
 
-<div id="resultsModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">X</button>
-            <h2 class="modal-title"><strong>Heres your most compatible partner</strong></h2>
-          </div>
-          <div class="modal-body">
-            <h2 id="matchName"></h2>
-            <img id="matchImg" src ="" alt="" height="350" width="300">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
 </body>
 </html>
 
@@ -206,7 +90,7 @@
 
 
 
-    $(".submit").on("click", function(event) {
+$(".submit").on("click", function(event) {
       event.preventDefault();
 
 
@@ -214,36 +98,17 @@
         // Create an object for the user's data
         
         // Here we grab the form elements
-          var newFriend = {
+          var newDate = {
             name: $("#survey-name").val().trim(),
             photo: $("#survey-photo").val(),
-
-            scores: [$("#q0").val(), $("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val()
-            ]      
+            tier: $("#tier").val()
           };
 
-          $.post("/api/friends", newFriend, function(data) {
+          $.post("/api/dates", newDate, function(data) {
 
-          // Grab the result from the AJAX post so that the best match's name and photo are displayed.
-          $("#matchName").text(data.name);
-          $('#matchImg').attr("src", data.photo);
-          // Show the modal with the best match
-          $("#resultsModal").modal('toggle');
-          // clear the input fields in the form
-          $("#survey-name").val("");
-          $("#survey-photo").val("");
-        });
-    } else {
-        $(".modal-title").text("Missing some infomation");
-        $(".modal-body").html("<h3>Please complete the form </h3>");
-        $("#resultsModal").modal('toggle');
-    }
-    return false;
-});
-// modal logic
-$('#closeModal').click(function() {
-    $.get('/',function(req,res){
-    location.replace(res);
-    })
+            console.log(data.name);
+            $("#displayResult").text(data.name);
+          });
+      };
 });
 </script>
