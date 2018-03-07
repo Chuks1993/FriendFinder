@@ -25,12 +25,12 @@ module.exports = function(app) {
 
   
 
-      bestMatch = {};
+      var bestMatch = [];
 
       for (var i = 0; i < datesData.length; i++) {
         if (datesData[i].tier === parseInt(newDate.tier)) {
           console.log(datesData[i]);
-          bestMatch = datesData[i];
+          bestMatch.push(datesData[i]);
         } 
       }
 
